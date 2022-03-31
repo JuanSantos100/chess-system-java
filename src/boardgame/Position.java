@@ -26,8 +26,7 @@ public class Position {
     }
 
     @Override
-    public String toString() { //Estudar o que é o Override
-        // TODO Auto-generated method stub
+    public String toString() {
         return row + ", " + column;
     }
 
