@@ -8,11 +8,24 @@ import chess_piece.Rook;
 
 
 public class ChessMatch {
+    private int turn;
+    private Color currentPlayer;
+
     private Board board;
 
     public ChessMatch() {
-        board = new Board(8, 8); 
+        board = new Board(8, 8);
+        turn = 1;
+        currentPlayer = Color.WHITE; 
         initialSetup();
+    }
+
+    public int getTurn() {
+        return turn;
+    }
+
+    public Color getCurrentPlayer() {
+        return currentPlayer;
     }
 
 
@@ -42,6 +55,7 @@ public class ChessMatch {
         validateSourcePosition(source);
         validateTargetPosition(source, target);
         Piece capturedPiece = makeMove (source, target);
+        nextTurn();
         return (ChessPiece) capturedPiece;
     }
     
@@ -55,6 +69,10 @@ public class ChessMatch {
         if (!board.thereIsAPiece(sourcePosition)) {
             throw new ChessException("There is no piece on source position");
         }
+        if(currentPlayer != ((ChessPiece)board.piece(sourcePosition)).getColor()) {
+            throw new ChessException("The chosen piece is not yours");   
+        }
+
         if(!board.piece(sourcePosition).isThereAnyPossibleMove()) {
             throw new ChessException("There is no possible for the chosen piece");
         }
@@ -64,6 +82,13 @@ public class ChessMatch {
         if (!board.piece(sourcePosition).possibleMove(targePosition)) {
             throw new ChessException("The chosen piece can't move to the target position");
         }
+    }
+
+    private void nextTurn() {
+        turn++;
+
+        //Operação ternária
+        currentPlayer = (currentPlayer == Color.WHITE) ? Color.BLACK : Color.WHITE;
     }
 
 
