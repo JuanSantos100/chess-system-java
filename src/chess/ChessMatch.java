@@ -28,6 +28,12 @@ public class ChessMatch {
         return match;
     }
 
+    public boolean[][] possibleMoves(ChessPosition sourcePosition) {
+        Position position = sourcePosition.toPosition();
+        validateSourcePosition(position);
+        return board.piece(position).possibleMoves();
+    }
+
     public ChessPiece performChessMove (ChessPosition sourcePosition, ChessPosition targetPosition) {
         //Convertendo as posições de matriz para posições de xadez
         Position source = sourcePosition.toPosition();
